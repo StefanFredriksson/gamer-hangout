@@ -1,0 +1,30 @@
+#header-div {
+  height: 10%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#header-list {
+  list-style-type: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#header-list li {
+  min-width: 19vw;
+  text-align: center;
+}
+
+#header-list li span {
+  font-size: 17px;
+  transition: 0.5s;
+}
+
+#header-list li span:hover {
+  font-size: 30px;
+  transition: 0.5s;
+  cursor: pointer;
+}
