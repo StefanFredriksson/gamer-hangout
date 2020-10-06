@@ -4,23 +4,23 @@ import './style.css'
 export default function index () {
   return (
     <div id='header-div'>
-      <ul id='header-list'>
-        <li>
+      <div id='header-grid'>
+        <div class='header-item'>
           <span>Games</span>
-        </li>
-        <li>
+        </div>
+        <div class='header-item'>
           <span>Movies</span>
-        </li>
-        <li>
+        </div>
+        <div class='header-item'>
           <span>Series</span>
-        </li>
-        <li>
+        </div>
+        <div class='header-item'>
           <span>Streams</span>
-        </li>
-        <li>
+        </div>
+        <div class='header-item'>
           <span>Chat</span>
-        </li>
-      </ul>
+        </div>
+      </div>
     </div>
   )
 }
