@@ -1,0 +1,13 @@
+#bouncy-div {
+  height: 89.9%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#bouncy-canvas {
+  height: 70%;
+  width: 70%;
+  background: white;
+}
