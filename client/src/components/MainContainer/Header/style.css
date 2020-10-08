@@ -25,7 +25,15 @@
   transition: 0.5s;
 }
 
-.header-item span:hover {
+.header-item a {
+  text-decoration: none;
+  font-size: 17px;
+  transition: 0.5s;
+  color: white;
+}
+
+.header-item span:hover,
+.header-item a:hover {
   font-size: 30px;
   transition: 0.5s;
   cursor: pointer;

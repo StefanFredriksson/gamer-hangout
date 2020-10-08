@@ -1,10 +1,11 @@
 import React from 'react'
 import './style.css'
+import { Link } from 'react-router-dom'
 
 export default function index () {
   return (
     <div id='logo-div'>
-      <h1>Gamer Hangout</h1>
+      <Link to='/'>Gamer Hangout</Link>
     </div>
   )
 }

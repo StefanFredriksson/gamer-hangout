@@ -1,12 +1,13 @@
 import React from 'react'
 import './style.css'
+import { BrowserRouter as Router, Link } from 'react-router-dom'
 
 export default function index () {
   return (
     <div id='header-div'>
       <div id='header-grid'>
         <div class='header-item'>
-          <span>Games</span>
+          <Link to='/games'>Games</Link>
         </div>
         <div class='header-item'>
           <span>Movies</span>
