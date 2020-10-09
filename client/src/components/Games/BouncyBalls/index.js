@@ -15,7 +15,7 @@ function Circle (x, y, radius, dx, dy, color) {
   this.dx = dx
   this.dy = dy
   this.color = color
-  this.maxRadius = 100
+  this.maxRadius = 50
 
   this.draw = () => {
     cx.beginPath()
@@ -66,6 +66,22 @@ const animate = c => {
   }
 }
 
+const createCircle = (px = undefined, py = undefined) => {
+  const radius = Math.random() * 29 + 1
+  const x = !px ? Math.random() * (window.innerWidth - radius * 2) + radius : px
+  const y = !py
+    ? Math.random() * (window.innerHeight - radius * 2) + radius
+    : py
+  const dx = Math.random() - 0.5
+  const dy = Math.random() - 0.5
+  const blue = Math.floor(Math.random() * 255)
+  const green = Math.floor(Math.random() * 255)
+  const red = Math.floor(Math.random() * 255)
+  circles.push(
+    new Circle(x, y, radius, dx, dy, `rgba(${red}, ${green}, ${blue}, 0.7)`)
+  )
+}
+
 const init = () => {
   circles = []
   const canvas = document.querySelector('#bouncy-canvas')
@@ -73,19 +89,19 @@ const init = () => {
   canvas.height = window.innerHeight
   cx = canvas.getContext('2d')
 
-  for (let i = 0; i < 800; i++) {
-    const radius = Math.random() * 29 + 1
-    const x = Math.random() * (window.innerWidth - radius * 2) + radius
-    const y = Math.random() * (window.innerHeight - radius * 2) + radius
-    const dx = Math.random() - 0.5
-    const dy = Math.random() - 0.5
-    const blue = Math.floor(Math.random() * 255)
-    const green = Math.floor(Math.random() * 255)
-    const red = Math.floor(Math.random() * 255)
-    circles.push(
-      new Circle(x, y, radius, dx, dy, `rgba(${red}, ${green}, ${blue}, 0.7)`)
-    )
+  for (let i = 0; i < 0; i++) {
+    createCircle()
   }
+}
+
+const getMousePos = event => {
+  const canvas = document.querySelector('#bouncy-canvas')
+  const rect = canvas.getBoundingClientRect()
+  const scaleX = canvas.width / rect.width
+  const scaleY = canvas.height / rect.height
+  const x = (event.x - rect.left) * scaleX
+  const y = (event.y - rect.top) * scaleY
+  return { x, y }
 }
 
 const listeners = () => {
@@ -94,18 +110,28 @@ const listeners = () => {
     return
   }
 
+  let interval
   const canvas = document.querySelector('#bouncy-canvas')
   canvas.addEventListener('mousemove', function (event) {
-    const rect = canvas.getBoundingClientRect()
-    const scaleX = canvas.width / rect.width
-    const scaleY = canvas.height / rect.height
-    mx = (event.x - rect.left) * scaleX
-    my = (event.y - rect.top) * scaleY
+    const pos = getMousePos(event)
+    mx = pos.x
+    my = pos.y
   })
 
   canvas.addEventListener('mouseleave', () => {
     mx = 1000000
     my = 1000000
+    clearInterval(interval)
+  })
+
+  canvas.addEventListener('mousedown', event => {
+    interval = setInterval(() => {
+      createCircle(mx, my)
+    }, 50)
+  })
+
+  canvas.addEventListener('mouseup', event => {
+    clearInterval(interval)
   })
 
   window.addEventListener('resize', () => {
