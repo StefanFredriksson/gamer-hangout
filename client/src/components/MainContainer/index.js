@@ -4,6 +4,7 @@ import Header from './Header'
 import Homepage from './Homepage'
 import Games from '../Games'
 import BouncyBalls from '../Games/BouncyBalls'
+import Sudoku from '../Games/Sudoku'
 import { Switch, Route } from 'react-router-dom'
 
 export default function index () {
@@ -13,6 +14,9 @@ export default function index () {
       <Switch>
         <Route path='/games/bouncyballs'>
           <BouncyBalls />
+        </Route>
+        <Route path='/games/sudoku'>
+          <Sudoku />
         </Route>
         <Route path='/games'>
           <Games />

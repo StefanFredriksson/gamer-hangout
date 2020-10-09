@@ -72,8 +72,8 @@ const createCircle = (px = undefined, py = undefined) => {
   const y = !py
     ? Math.random() * (window.innerHeight - radius * 2) + radius
     : py
-  const dx = Math.random() - 0.5
-  const dy = Math.random() - 0.5
+  const dx = (Math.random() - 0.5) * 4
+  const dy = (Math.random() - 0.5) * 4
   const blue = Math.floor(Math.random() * 255)
   const green = Math.floor(Math.random() * 255)
   const red = Math.floor(Math.random() * 255)

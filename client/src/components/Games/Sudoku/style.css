@@ -1,0 +1,42 @@
+#sudoku-div {
+  height: 89.9%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#sudoku-container {
+  background: white;
+  color: black;
+  border-collapse: collapse;
+}
+
+#sudoku-container tr td {
+  padding: 20px;
+  border: thin solid black;
+}
+
+#sudoku-container tr td:nth-child(1n + 9) {
+  border-right: none;
+}
+
+#sudoku-container tr td:nth-child(9n + 1) {
+  border-left: none;
+}
+
+#sudoku-container tr:nth-child(1) td {
+  border-top: none;
+}
+
+#sudoku-container tr:nth-child(9) td {
+  border-bottom: none;
+}
+
+#sudoku-container tr:nth-child(3n + 3) td {
+  border-bottom: 3px solid black;
+}
+
+#sudoku-container tr td:nth-child(3n + 3) {
+  border-right: 3px solid black;
+}
