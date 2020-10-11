@@ -13,8 +13,30 @@
 }
 
 #sudoku-container tr td {
-  padding: 20px;
+  text-align: center;
   border: thin solid black;
+  width: 30px;
+  height: 30px;
+  font-size: 20px;
+  font-weight: bolder;
+}
+
+.cell-container {
+  padding: 20px;
+  background: rgb(233, 233, 233);
+}
+
+.cell-input {
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  border: none;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
+    'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
 #sudoku-container tr td:nth-child(1n + 9) {

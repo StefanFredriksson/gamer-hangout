@@ -38,13 +38,48 @@ const generateMatrix = () => {
   return matrix
 }
 
-const rowIsLegal = (row, num) => {
-  return !row.includes(num)
+const generatePlayerMatrix = matrix => {
+  const difficulty = 5
+  const pMatrix = []
+
+  for (let i = 0; i < matrix.length; i++) {
+    pMatrix.push([])
+    for (let j = 0; j < matrix[i].length; j++) {
+      const obj = { visible: true, num: matrix[i][j], initial: true }
+      pMatrix[i].push(obj)
+    }
+  }
+
+  for (let i = 0; i < difficulty; i++) {
+    do {
+      const col = Math.floor(Math.random() * 9)
+      const row = Math.floor(Math.random() * 9)
+
+      if (pMatrix[row][col].visible) {
+        pMatrix[row][col].visible = false
+        pMatrix[row][col].num = ''
+        pMatrix[row][col].initial = false
+        break
+      }
+    } while (true)
+  }
+
+  return pMatrix
 }
 
-const columnIsLegal = (matrix, index, num) => {
+const rowIsLegal = (row, num, index) => {
+  for (let i = 0; i < row.length; i++) {
+    if ((i !== index && row[i] === num) || row[i] === '') {
+      return false
+    }
+  }
+
+  return true
+}
+
+const columnIsLegal = (matrix, index, num, ix) => {
   for (let i = 0; i < matrix.length; i++) {
-    if (matrix[i][index] === num) {
+    if (matrix[i][index] === num && i !== ix) {
       return false
     }
   }
@@ -88,6 +123,32 @@ const boxIsLegal = (matrix, colIndex, rowIndex, num) => {
   return true
 }
 
+const isCompleted = pMatrix => {
+  const matrix = pMatrix.map(m => {
+    return m.map(c => {
+      return c.num
+    })
+  })
+
+  for (let i = 0; i < matrix.length; i++) {
+    for (let j = 0; j < matrix[i].length; j++) {
+      const cell = matrix[i][j]
+
+      if (
+        !rowIsLegal(matrix[i], cell, j) ||
+        !columnIsLegal(matrix, j, cell, i) ||
+        !boxIsLegal(matrix, i, j, cell)
+      ) {
+        return false
+      }
+    }
+  }
+
+  return true
+}
+
 module.exports = {
-  generateMatrix
+  generateMatrix,
+  generatePlayerMatrix,
+  isCompleted
 }
