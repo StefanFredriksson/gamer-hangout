@@ -5,14 +5,32 @@ import logic from './logic'
 export default class index extends Component {
   constructor (props) {
     super(props)
-    this.state = { matrix: [], pMatrix: [] }
+    this.difficulties = [
+      { label: 'Very Easy', num: 12 },
+      { label: 'Easy', num: 20 },
+      { label: 'Medium', num: 30 },
+      { label: 'Difficult', num: 54 },
+      { label: 'Very Difficult', num: 68 }
+    ]
+    this.state = {
+      matrix: [],
+      pMatrix: [],
+      difficulty: this.difficulties[0].num
+    }
     this.verifyInput = this.verifyInput.bind(this)
+    this.setDifficulty = this.setDifficulty.bind(this)
   }
 
   componentDidMount () {
     const matrix = logic.generateMatrix()
-    const pMatrix = logic.generatePlayerMatrix(matrix)
+    const pMatrix = logic.generatePlayerMatrix(matrix, this.state.difficulty)
     this.setState({ matrix, pMatrix })
+  }
+
+  setDifficulty (event) {
+    const matrix = logic.generateMatrix()
+    const pMatrix = logic.generatePlayerMatrix(matrix, event.target.value)
+    this.setState({ matrix, pMatrix, difficulty: event.target.value })
   }
 
   verifyInput (event) {
@@ -39,29 +57,47 @@ export default class index extends Component {
 
   render () {
     return (
-      <div id='sudoku-div'>
-        <table id='sudoku-container'>
-          {this.state.pMatrix.map(row => {
-            return (
-              <tr>
-                {row.map(cell => {
-                  if (!cell.visible) {
-                    return (
-                      <td>
-                        <input
-                          type='text'
-                          className='cell-input'
-                          onKeyDown={this.verifyInput}
-                        />
-                      </td>
-                    )
-                  }
-                  return <td className='cell-container'>{cell.num}</td>
-                })}
-              </tr>
-            )
-          })}
-        </table>
+      <div id='sudoku-main-div'>
+        <div id='options-panel'>
+          <div id='difficulties-div'>
+            <h3>Difficulties</h3>
+            <ul>
+              {this.difficulties.map(d => {
+                return (
+                  <li>
+                    <button onClick={this.setDifficulty} value={d.num}>
+                      {d.label}
+                    </button>
+                  </li>
+                )
+              })}
+            </ul>
+          </div>
+        </div>
+        <div id='sudoku-div'>
+          <table id='sudoku-container'>
+            {this.state.pMatrix.map(row => {
+              return (
+                <tr>
+                  {row.map(cell => {
+                    if (!cell.visible) {
+                      return (
+                        <td>
+                          <input
+                            type='text'
+                            className='cell-input'
+                            onKeyDown={this.verifyInput}
+                          />
+                        </td>
+                      )
+                    }
+                    return <td className='cell-container'>{cell.num}</td>
+                  })}
+                </tr>
+              )
+            })}
+          </table>
+        </div>
       </div>
     )
   }

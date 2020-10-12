@@ -1,5 +1,77 @@
-#sudoku-div {
+#sudoku-main-div {
   height: 89.9%;
+  width: 100%;
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+}
+
+#options-panel {
+  height: 50%;
+  width: 25%;
+  float: left;
+  display: flex;
+  position: absolute;
+  left: 0px;
+  top: 25%;
+  margin-left: 20px;
+  justify-content: center;
+  border-radius: 20px;
+  box-shadow: -5px -5px 10px rgba(255, 255, 255, 0.05),
+    5px 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+#difficulties-div {
+  height: 50%;
+  width: 100%;
+  margin-top: 10px;
+}
+
+#difficulties-div h3 {
+  margin-left: 10px;
+}
+
+#difficulties-div ul {
+  list-style-type: none;
+  float: left;
+  padding: 0;
+  margin: 0;
+  margin-left: 10px;
+}
+
+#difficulties-div ul li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40%;
+  margin-top: 15px;
+}
+
+#difficulties-div ul li button {
+  height: 100%;
+  width: 100%;
+  padding: 10px;
+  background: #131419;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  box-shadow: -2px -2px 6px rgba(255, 255, 255, 0.1),
+    2px 2px 6px rgba(0, 0, 0, 0.8);
+}
+
+#difficulties-div ul li button:hover {
+  box-shadow: inset -2px -2px 6px rgba(255, 255, 255, 0.1),
+    inset 2px 2px 6px rgba(0, 0, 0, 0.8);
+  cursor: pointer;
+}
+
+#difficulties-div ul li:nth-child(1) {
+  margin-top: 0;
+}
+
+#sudoku-div {
+  height: 100%;
   width: 100%;
   display: flex;
   align-items: center;
@@ -15,14 +87,13 @@
 #sudoku-container tr td {
   text-align: center;
   border: thin solid black;
-  width: 30px;
-  height: 30px;
+  width: 60px;
+  height: 60px;
   font-size: 20px;
   font-weight: bolder;
 }
 
 .cell-container {
-  padding: 20px;
   background: rgb(233, 233, 233);
 }
 
@@ -37,6 +108,14 @@
   text-align: center;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
     'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+/*#sudoku-container tr td:nth-child(9n + 2) input {
+  padding: 20px;
+}*/
+
+.cell-input:hover {
+  cursor: pointer;
 }
 
 #sudoku-container tr td:nth-child(1n + 9) {

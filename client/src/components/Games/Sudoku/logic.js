@@ -38,8 +38,7 @@ const generateMatrix = () => {
   return matrix
 }
 
-const generatePlayerMatrix = matrix => {
-  const difficulty = 5
+const generatePlayerMatrix = (matrix, difficulty) => {
   const pMatrix = []
 
   for (let i = 0; i < matrix.length; i++) {
