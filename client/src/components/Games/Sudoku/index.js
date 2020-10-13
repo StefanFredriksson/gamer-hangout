@@ -6,7 +6,7 @@ export default class index extends Component {
   constructor (props) {
     super(props)
     this.difficulties = [
-      { label: 'Very Easy', num: 12 },
+      { label: 'Very Easy', num: 1 },
       { label: 'Easy', num: 20 },
       { label: 'Medium', num: 30 },
       { label: 'Difficult', num: 54 },
@@ -24,12 +24,14 @@ export default class index extends Component {
   componentDidMount () {
     const matrix = logic.generateMatrix()
     const pMatrix = logic.generatePlayerMatrix(matrix, this.state.difficulty)
+    this.timer()
     this.setState({ matrix, pMatrix })
   }
 
   setDifficulty (event) {
     const matrix = logic.generateMatrix()
     const pMatrix = logic.generatePlayerMatrix(matrix, event.target.value)
+    document.querySelector('#finished-div').style.visibility = 'hidden'
     this.setState({ matrix, pMatrix, difficulty: event.target.value })
   }
 
@@ -49,10 +51,38 @@ export default class index extends Component {
       if (!this.state.pMatrix[row][col].initial) {
         this.state.pMatrix[row][col].num = isNaN(total) ? '' : total
         if (logic.isCompleted(this.state.pMatrix)) {
-          console.log('Completed!')
+          document.querySelector('#finished-div').style.visibility = 'visible'
+        } else {
+          document.querySelector('#finished-div').style.visibility = 'hidden'
         }
       }
     }
+  }
+
+  displayTimer (event) {
+    const ctndwn = document.querySelector('#timer-countdown')
+    if (event.target.checked) {
+      ctndwn.style.visibility = 'visible'
+    } else {
+      ctndwn.style.visibility = 'hidden'
+    }
+  }
+
+  timer () {
+    let time = 0
+    let interval = null
+    const timerNode = document.querySelector('#timer-countdown')
+
+    interval = setInterval(() => {
+      time++
+      const hours = Math.floor(time / (60 * 60))
+      const minutes = Math.floor((time / 60) % 60)
+      const seconds = Math.floor(time % 60)
+      const timeString = `${hours}h ${minutes}${
+        minutes <= 1 ? 'min' : 'mins'
+      } ${seconds}${seconds <= 1 ? 'sec' : 'secs'}`
+      timerNode.textContent = timeString
+    }, 1000)
   }
 
   render () {
@@ -72,6 +102,19 @@ export default class index extends Component {
                 )
               })}
             </ul>
+          </div>
+          <div id='right-side-div'>
+            <div id='timer-div'>
+              <h3 id='timer-countdown'>0h 0min 0sec</h3>
+              <label id='timer-switch'>
+                <input type='checkbox' onChange={this.displayTimer} name='' />
+                <span class='btn' />
+                <i class='fa fa-clock-o' aria-hidden='true' />
+              </label>
+            </div>
+            <div id='finished-div'>
+              <h3>Sudoku completed!</h3>
+            </div>
           </div>
         </div>
         <div id='sudoku-div'>

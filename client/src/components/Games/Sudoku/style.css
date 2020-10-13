@@ -26,6 +26,7 @@
   height: 50%;
   width: 100%;
   margin-top: 10px;
+  margin-left: 10px;
 }
 
 #difficulties-div h3 {
@@ -53,6 +54,7 @@
   width: 100%;
   padding: 10px;
   background: #131419;
+  outline: none;
   color: white;
   border: none;
   border-radius: 10px;
@@ -68,6 +70,80 @@
 
 #difficulties-div ul li:nth-child(1) {
   margin-top: 0;
+}
+
+#right-side-div {
+  min-height: 100%;
+  min-width: 60%;
+}
+
+#timer-div {
+  width: 100%;
+  height: 30%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+}
+
+#timer-div h3 {
+  margin: 0;
+  padding: 0;
+  margin-top: 10px;
+  visibility: hidden;
+}
+
+#timer-switch {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  border-radius: 50%;
+  margin-top: 10px;
+}
+
+#timer-switch .btn {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: #1b1b1b;
+  border-radius: 50%;
+  box-shadow: 0 3px 4px rgba(0, 0, 0, 1), inset 0 -2px 5px rgba(0, 0, 0, 1),
+    inset 0 2px 2px rgba(255, 255, 255, 0.5), 0 0 0 2px #000, 0 0 0 5px #131419,
+    0 0 0 5.5px #080808;
+}
+
+#timer-switch input[type='checkbox'] {
+  -webkit-appearance: none;
+}
+
+#timer-switch .fa {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.7em;
+  color: #0c0c0c;
+}
+
+#timer-switch input[type='checkbox']:checked ~ .btn {
+  box-shadow: 0 0 0 rgba(0, 0, 0, 1), inset 0 -2px 5px rgba(0, 0, 0, 1),
+    inset 0 1px 1px rgba(255, 255, 255, 0.1), 0 0 0 2px #000, 0 0 0 5px #131419,
+    0 0 0 5.5px #00a1ff;
+}
+
+#timer-switch input[type='checkbox']:checked ~ .fa {
+  color: #00ffe7;
+  text-shadow: 0 0 15px #00a1ff, 0 0 30px #00a1ff;
+}
+
+#finished-div {
+  visibility: hidden;
 }
 
 #sudoku-div {
@@ -109,10 +185,6 @@
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
     'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
-
-/*#sudoku-container tr td:nth-child(9n + 2) input {
-  padding: 20px;
-}*/
 
 .cell-input:hover {
   cursor: pointer;
