@@ -9,3 +9,20 @@
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
     'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
+
+.dark-main-background-color {
+  background-color: #131419;
+  color: white;
+  transition: 0.5s;
+}
+
+.main-container-neumorphism {
+  box-shadow: -5px -5px 10px rgba(0, 0, 0, 0.05),
+    5px 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+.light-main-background-color {
+  background-color: rgb(250, 250, 250);
+  color: black;
+  transition: 0.5s;
+}

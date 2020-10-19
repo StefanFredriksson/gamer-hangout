@@ -9,5 +9,14 @@
 #bouncy-canvas {
   height: 70%;
   width: 70%;
+}
+
+.dark-canvas {
   background: white;
+  transition: 0.5s;
+}
+
+.light-canvas {
+  background: rgb(224, 224, 224);
+  transition: 0.5s;
 }

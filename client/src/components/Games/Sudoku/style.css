@@ -2,19 +2,18 @@
   height: 89.9%;
   width: 100%;
   display: flex;
-  position: relative;
   align-items: center;
   justify-content: center;
 }
 
 #options-panel {
-  height: 50%;
+  height: 40%;
   width: 25%;
   float: left;
   display: flex;
   position: absolute;
-  left: 0px;
-  top: 25%;
+  left: 3vw;
+  top: 30%;
   margin-left: 20px;
   justify-content: center;
   border-radius: 20px;
@@ -49,23 +48,40 @@
   margin-top: 15px;
 }
 
+.light-diff-btn {
+  color: black;
+  background: white;
+  box-shadow: -2px -2px 6px rgba(0, 0, 0, 0.1), 2px 2px 6px rgba(0, 0, 0, 0.8);
+  transition: 0.5s;
+}
+
+.dark-diff-btn {
+  color: white;
+  box-shadow: -2px -2px 6px rgba(255, 255, 255, 0.1),
+    2px 2px 6px rgba(0, 0, 0, 0.8);
+  background: #131419;
+  transition: 0.5s;
+}
+
+.light-diff-btn:hover {
+  box-shadow: inset -2px -2px 6px rgba(0, 0, 0, 0.1),
+    inset 2px 2px 6px rgba(0, 0, 0, 0.8);
+  cursor: pointer;
+}
+
+.dark-diff-btn:hover {
+  box-shadow: inset -2px -2px 6px rgba(255, 255, 255, 0.1),
+    inset 2px 2px 6px rgba(0, 0, 0, 0.8);
+  cursor: pointer;
+}
+
 #difficulties-div ul li button {
   height: 100%;
   width: 100%;
   padding: 10px;
-  background: #131419;
   outline: none;
-  color: white;
   border: none;
   border-radius: 10px;
-  box-shadow: -2px -2px 6px rgba(255, 255, 255, 0.1),
-    2px 2px 6px rgba(0, 0, 0, 0.8);
-}
-
-#difficulties-div ul li button:hover {
-  box-shadow: inset -2px -2px 6px rgba(255, 255, 255, 0.1),
-    inset 2px 2px 6px rgba(0, 0, 0, 0.8);
-  cursor: pointer;
 }
 
 #difficulties-div ul li:nth-child(1) {

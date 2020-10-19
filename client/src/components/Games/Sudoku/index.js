@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import './style.css'
 import logic from './logic'
+import {ThemeContext} from '../../../Store'
 
 export default class index extends Component {
+  static contextType = ThemeContext
   constructor (props) {
     super(props)
     this.difficulties = [
@@ -15,8 +17,11 @@ export default class index extends Component {
     this.state = {
       matrix: [],
       pMatrix: [],
-      difficulty: this.difficulties[0].num
+      difficulty: this.difficulties[0].num,
+      time: 0,
+      interval: null
     }
+
     this.verifyInput = this.verifyInput.bind(this)
     this.setDifficulty = this.setDifficulty.bind(this)
   }
@@ -32,7 +37,7 @@ export default class index extends Component {
     const matrix = logic.generateMatrix()
     const pMatrix = logic.generatePlayerMatrix(matrix, event.target.value)
     document.querySelector('#finished-div').style.visibility = 'hidden'
-    this.setState({ matrix, pMatrix, difficulty: event.target.value })
+    this.setState({ matrix, pMatrix, difficulty: event.target.value, time: 0 })
   }
 
   verifyInput (event) {
@@ -52,6 +57,7 @@ export default class index extends Component {
         this.state.pMatrix[row][col].num = isNaN(total) ? '' : total
         if (logic.isCompleted(this.state.pMatrix)) {
           document.querySelector('#finished-div').style.visibility = 'visible'
+          clearInterval(this.state.interval)
         } else {
           document.querySelector('#finished-div').style.visibility = 'hidden'
         }
@@ -69,23 +75,24 @@ export default class index extends Component {
   }
 
   timer () {
-    let time = 0
-    let interval = null
     const timerNode = document.querySelector('#timer-countdown')
 
-    interval = setInterval(() => {
-      time++
-      const hours = Math.floor(time / (60 * 60))
-      const minutes = Math.floor((time / 60) % 60)
-      const seconds = Math.floor(time % 60)
+    const interval = setInterval(() => {
+      this.setState({ time: this.state.time + 1 })
+      const hours = Math.floor(this.state.time / (60 * 60))
+      const minutes = Math.floor((this.state.time / 60) % 60)
+      const seconds = Math.floor(this.state.time % 60)
       const timeString = `${hours}h ${minutes}${
         minutes <= 1 ? 'min' : 'mins'
       } ${seconds}${seconds <= 1 ? 'sec' : 'secs'}`
       timerNode.textContent = timeString
     }, 1000)
+
+    this.setState({ interval })
   }
 
   render () {
+    const [theme] = this.context
     return (
       <div id='sudoku-main-div'>
         <div id='options-panel'>
@@ -95,7 +102,7 @@ export default class index extends Component {
               {this.difficulties.map(d => {
                 return (
                   <li>
-                    <button onClick={this.setDifficulty} value={d.num}>
+                    <button className={theme ? 'light-diff-btn' : 'dark-diff-btn'} onClick={this.setDifficulty} value={d.num}>
                       {d.label}
                     </button>
                   </li>

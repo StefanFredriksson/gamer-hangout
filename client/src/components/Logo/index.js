@@ -1,11 +1,15 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import './style.css'
 import { Link } from 'react-router-dom'
+import { ThemeContext } from '../../Store'
 
-export default function index () {
+export default function Index () {
+  const [theme] = useContext(ThemeContext)
   return (
     <div id='logo-div'>
-      <Link to='/'>Gamer Hangout</Link>
+      <Link class={theme ? 'light-logo' : 'dark-logo'} to='/'>
+        Gamer Hangout
+      </Link>
     </div>
   )
 }

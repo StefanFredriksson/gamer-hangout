@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useContext } from 'react'
 import './style.css'
+import { ThemeContext } from '../../../Store'
 
 let cx
 let mx
@@ -106,9 +107,10 @@ const getMousePos = event => {
 
 const listeners = () => {
   if (first) {
-    first = true
     return
   }
+
+  first = true
 
   let interval
   const canvas = document.querySelector('#bouncy-canvas')
@@ -142,14 +144,20 @@ const listeners = () => {
 }
 
 export default function Index () {
+  const [theme] = useContext(ThemeContext)
   useEffect(() => {
-    listeners()
-    init()
-    animate()
+    if (!first) {
+      listeners()
+      init()
+      animate()
+    }
   })
   return (
     <div id='bouncy-div'>
-      <canvas id='bouncy-canvas' />
+      <canvas
+        className={theme ? 'light-canvas' : 'dark-canvas'}
+        id='bouncy-canvas'
+      />
     </div>
   )
 }

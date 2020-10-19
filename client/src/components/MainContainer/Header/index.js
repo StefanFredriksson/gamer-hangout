@@ -1,13 +1,23 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import './style.css'
 import { Link } from 'react-router-dom'
+import { ThemeContext } from '../../../Store'
 
-export default function index () {
+export default function Index () {
+  const [theme] = useContext(ThemeContext)
   return (
-    <div id='header-div'>
+    <div
+      className={theme ? 'light-header-border' : 'dark-header-border'}
+      id='header-div'
+    >
       <div id='header-grid'>
         <div className='header-item'>
-          <Link to='/games'>Games</Link>
+          <Link
+            className={theme ? 'light-header-link' : 'dark-header-link'}
+            to='/games'
+          >
+            Games
+          </Link>
         </div>
         <div className='header-item'>
           <span>Movies</span>
