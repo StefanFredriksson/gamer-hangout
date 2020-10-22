@@ -1,154 +1,47 @@
-import React, { Component } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import './style.css'
 import logic from './logic'
-import {ThemeContext} from '../../../Store'
+import Cell from './Cell'
+import Options from './Options'
+import { SudokuContext } from '../../../Store'
 
-export default class index extends Component {
-  static contextType = ThemeContext
-  constructor (props) {
-    super(props)
-    this.difficulties = [
-      { label: 'Very Easy', num: 1 },
-      { label: 'Easy', num: 20 },
-      { label: 'Medium', num: 30 },
-      { label: 'Difficult', num: 54 },
-      { label: 'Very Difficult', num: 68 }
-    ]
-    this.state = {
-      matrix: [],
-      pMatrix: [],
-      difficulty: this.difficulties[0].num,
-      time: 0,
-      interval: null
-    }
+export default function Index () {
+  const [sudoku] = useContext(SudokuContext)
+  const [render, setRender] = useState(0)
 
-    this.verifyInput = this.verifyInput.bind(this)
-    this.setDifficulty = this.setDifficulty.bind(this)
-  }
-
-  componentDidMount () {
-    const matrix = logic.generateMatrix()
-    const pMatrix = logic.generatePlayerMatrix(matrix, this.state.difficulty)
-    this.timer()
-    this.setState({ matrix, pMatrix })
-  }
-
-  setDifficulty (event) {
-    const matrix = logic.generateMatrix()
-    const pMatrix = logic.generatePlayerMatrix(matrix, event.target.value)
-    document.querySelector('#finished-div').style.visibility = 'hidden'
-    this.setState({ matrix, pMatrix, difficulty: event.target.value, time: 0 })
-  }
-
-  verifyInput (event) {
-    const v = parseInt(event.key)
-    const total = isNaN(v) ? v : parseInt(event.target.value + v)
-
-    if (
-      (total <= 0 || total > 9 || isNaN(total)) &&
-      event.key !== 'Backspace'
-    ) {
-      event.preventDefault()
-    } else {
-      const col = event.target.parentElement.cellIndex
-      const row = event.target.parentElement.parentElement.rowIndex
-
-      if (!this.state.pMatrix[row][col].initial) {
-        this.state.pMatrix[row][col].num = isNaN(total) ? '' : total
-        if (logic.isCompleted(this.state.pMatrix)) {
-          document.querySelector('#finished-div').style.visibility = 'visible'
-          clearInterval(this.state.interval)
-        } else {
-          document.querySelector('#finished-div').style.visibility = 'hidden'
-        }
-      }
-    }
-  }
-
-  displayTimer (event) {
-    const ctndwn = document.querySelector('#timer-countdown')
-    if (event.target.checked) {
-      ctndwn.style.visibility = 'visible'
-    } else {
-      ctndwn.style.visibility = 'hidden'
-    }
-  }
-
-  timer () {
-    const timerNode = document.querySelector('#timer-countdown')
-
-    const interval = setInterval(() => {
-      this.setState({ time: this.state.time + 1 })
-      const hours = Math.floor(this.state.time / (60 * 60))
-      const minutes = Math.floor((this.state.time / 60) % 60)
-      const seconds = Math.floor(this.state.time % 60)
-      const timeString = `${hours}h ${minutes}${
-        minutes <= 1 ? 'min' : 'mins'
-      } ${seconds}${seconds <= 1 ? 'sec' : 'secs'}`
-      timerNode.textContent = timeString
-    }, 1000)
-
-    this.setState({ interval })
-  }
-
-  render () {
-    const [theme] = this.context
-    return (
-      <div id='sudoku-main-div'>
-        <div id='options-panel'>
-          <div id='difficulties-div'>
-            <h3>Difficulties</h3>
-            <ul>
-              {this.difficulties.map(d => {
-                return (
-                  <li>
-                    <button className={theme ? 'light-diff-btn' : 'dark-diff-btn'} onClick={this.setDifficulty} value={d.num}>
-                      {d.label}
-                    </button>
-                  </li>
-                )
-              })}
-            </ul>
-          </div>
-          <div id='right-side-div'>
-            <div id='timer-div'>
-              <h3 id='timer-countdown'>0h 0min 0sec</h3>
-              <label id='timer-switch'>
-                <input type='checkbox' onChange={this.displayTimer} name='' />
-                <span class='btn' />
-                <i class='fa fa-clock-o' aria-hidden='true' />
-              </label>
-            </div>
-            <div id='finished-div'>
-              <h3>Sudoku completed!</h3>
-            </div>
-          </div>
-        </div>
-        <div id='sudoku-div'>
-          <table id='sudoku-container'>
-            {this.state.pMatrix.map(row => {
-              return (
-                <tr>
-                  {row.map(cell => {
-                    if (!cell.visible) {
-                      return (
-                        <td>
-                          <input
-                            type='text'
-                            className='cell-input'
-                            onKeyDown={this.verifyInput}
-                          />
-                        </td>
-                      )
-                    }
-                    return <td className='cell-container'>{cell.num}</td>
-                  })}
-                </tr>
-              )
-            })}
-          </table>
-        </div>
-      </div>
+  useEffect(() => {
+    sudoku.matrix = logic.generateMatrix()
+    sudoku.pMatrix = logic.generatePlayerMatrix(
+      sudoku.matrix,
+      sudoku.difficulty
     )
-  }
+    setRender(render + 1)
+    logic.timer(sudoku)
+  }, [])
+
+  return (
+    <div id='sudoku-main-div'>
+      <Options render={render} setRender={setRender} />
+      <div id='sudoku-div'>
+        <table id='sudoku-container'>
+          {sudoku.pMatrix.map(row => {
+            return (
+              <tr>
+                {row.map(cell => {
+                  if (!cell.visible) {
+                    return (
+                      <td>
+                        <Cell />
+                      </td>
+                    )
+                  }
+                  return <td className='cell-container'>{cell.num}</td>
+                })}
+              </tr>
+            )
+          })}
+        </table>
+      </div>
+    </div>
+  )
 }

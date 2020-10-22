@@ -3,7 +3,9 @@ const generateMatrix = () => {
   const size = 9
 
   for (let i = 0; i < size; i++) {
-    matrix.push([])
+    if (matrix.length < size) {
+      matrix.push([])
+    }
 
     for (let j = 0; j < size; j++) {
       let num = 0
@@ -146,8 +148,26 @@ const isCompleted = pMatrix => {
   return true
 }
 
+const timer = sudoku => {
+  const timerNode = document.querySelector('#timer-countdown')
+
+  const interval = setInterval(() => {
+    sudoku.time += 1
+    const hours = Math.floor(sudoku.time / (60 * 60))
+    const minutes = Math.floor((sudoku.time / 60) % 60)
+    const seconds = Math.floor(sudoku.time % 60)
+    const timeString = `${hours}h ${minutes}${
+      minutes <= 1 ? 'min' : 'mins'
+    } ${seconds}${seconds <= 1 ? 'sec' : 'secs'}`
+    timerNode.textContent = timeString
+  }, 1000)
+
+  sudoku.interval = interval
+}
+
 module.exports = {
   generateMatrix,
   generatePlayerMatrix,
-  isCompleted
+  isCompleted,
+  timer
 }
