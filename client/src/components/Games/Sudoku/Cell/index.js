@@ -34,6 +34,9 @@ export default function Index (props) {
 
   return (
     <div className='sudoku-cell'>
+      <div className='probable-numbers'>
+        <input type='text' className='probable-input' />
+      </div>
       <input type='text' className='cell-input' onKeyDown={verifyInput} />
     </div>
   )
