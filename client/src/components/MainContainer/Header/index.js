@@ -26,7 +26,12 @@ export default function Index () {
           <span>Series</span>
         </div>
         <div className='header-item'>
-          <span>Streams</span>
+          <Link
+            className={theme ? 'light-header-link' : 'dark-header-link'}
+            to='/streams'
+          >
+            Streams
+          </Link>
         </div>
         <div className='header-item'>
           <span>Chat</span>

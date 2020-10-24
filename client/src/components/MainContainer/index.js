@@ -5,6 +5,7 @@ import Homepage from './Homepage'
 import Games from '../Games'
 import BouncyBalls from '../Games/BouncyBalls'
 import Sudoku from '../Games/Sudoku'
+import Streams from '../Streams/Streams'
 import { Switch, Route } from 'react-router-dom'
 
 export default function index () {
@@ -20,6 +21,9 @@ export default function index () {
         </Route>
         <Route path='/games'>
           <Games />
+        </Route>
+        <Route path='/streams'>
+          <Streams />
         </Route>
         <Route path='/'>
           <Homepage />
